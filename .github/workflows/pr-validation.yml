@@ -189,18 +189,18 @@ jobs:
               console.log('Skipping checkbox validation - not a pull request event');
               return;
             }
-            
+
             const body = context.payload.pull_request.body || '';
             console.log('Validating PR description checkboxes...');
-            
+
             // Find checkboxes with incorrect spacing around X
             const invalidCheckboxes = body.match(/- \[\s+[xX]\s*\]/g) || [];
-            
+
             if (invalidCheckboxes.length > 0) {
               const errorMessage = `❌ Invalid checkbox format found: ${invalidCheckboxes.join(', ')}\n\n` +
                 `✅ Correct format: [x] or [X] (no extra spaces around X)\n` +
                 `❌ Incorrect format: [ x], [ X], [x ], [X ] (extra spaces)`;
-              
+
               console.log(errorMessage);
               core.setFailed(errorMessage);
             } else {
